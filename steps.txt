@@ -1,0 +1,7 @@
+# testar objetos do login e register - ok
+
+
+# CRUD de produtos 
+
+ -adcionar produtos
+ 
