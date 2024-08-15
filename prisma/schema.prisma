@@ -7,8 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Admin {
+  id        String @id @default(uuid())
+  admin_key String
+  name      String
+  email     String @unique(map: "User_email_key")
+  password  String
+}
+
 model Candidate {
   candidate_id            String              @id @default(uuid())
+  first_name              String
+  last_name               String
+  password                String
   position                String              @db.VarChar(255)
   educational_institution String              @db.VarChar(255)
   gender                  String              @db.VarChar(45)
@@ -86,6 +97,7 @@ model Opportunities {
   description       String              @db.VarChar(255)
   salary            Int
   requirements      String              @db.VarChar(255)
+  status            String              @default("aberta")
   createdAt         DateTime            @default(now())
   expires           DateTime
   enterprise        Enterprise_accounts @relation(fields: [enterprise_id], references: [enterprise_id])
@@ -95,7 +107,7 @@ model Opportunities {
 }
 
 model Selection_process {
-  id_selection_process String              
+  id_selection_process String
   candidate            Candidate           @relation(fields: [candidate_id], references: [candidate_id])
   candidate_id         String
   enterprise           Enterprise_accounts @relation(fields: [enterprise_id], references: [enterprise_id])
@@ -104,5 +116,6 @@ model Selection_process {
   opportunitie_id      Int
   createdAt            DateTime            @default(now())
   updatedAt            DateTime            @updatedAt
-  @@id([candidate_id,enterprise_id,opportunitie_id])
+
+  @@id([candidate_id, enterprise_id, opportunitie_id])
 }

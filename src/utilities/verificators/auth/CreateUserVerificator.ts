@@ -1,5 +1,5 @@
 import { HttpException } from "../../../exceptions/HttpException";
-import { ICandidateAttributes, ICandidateLoginAttributes } from "../../../interfaces/auth";
+import { IUserAttributes, IUserLoginAttributes } from "../../../interfaces/auth";
 import { ICreateUserVerificator } from "./ICreateUserVerificator";
 import { IUserServiceProtocol } from "../../../services/auth/IUserService";
 import bcrypt from 'bcrypt';
@@ -10,7 +10,7 @@ export class CreateUserVerificator implements ICreateUserVerificator{
 
   constructor(private service:IUserServiceProtocol){}
 
-  async emailAlreadyExists(email:string): Promise<ICandidateAttributes | undefined> {
+  async emailAlreadyExists(email:string): Promise<IUserAttributes | undefined> {
 
       const user = await this.service.getUserByEmail(email)
 
@@ -31,7 +31,7 @@ export class CreateUserVerificator implements ICreateUserVerificator{
    
   }
 
-  async startLoginVerification(user:ICandidateLoginAttributes): Promise<void> {
+  async startLoginVerification(user:IUserLoginAttributes): Promise<void> {
     try {
       
       allFieldsAreFilled(user)
@@ -58,7 +58,7 @@ export class CreateUserVerificator implements ICreateUserVerificator{
 
 
 
-  async startRegisterVerification(user:ICandidateAttributes): Promise<void> {
+  async startRegisterVerification(user:IUserAttributes): Promise<void> {
     try {
       //check if all fields are filled
       allFieldsAreFilled(user)

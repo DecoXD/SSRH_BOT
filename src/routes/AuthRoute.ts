@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { UserService } from "../services/auth/UserService";
 import { CreateUserVerificator } from "../utilities/verificators/auth/CreateUserVerificator";
-import { ICandidateAuthControllerProtocol } from "../controllers/Auth/Candidate/ICandidateController";
-import { UserController } from "../controllers/Auth/Candidate/CandidateAuthController";
+import { IUserAuthControllerProtocol } from "../controllers/Auth/User/IUserController";
+import { UserController } from "../controllers/Auth/User/UserController";
 import { TokenManipulator } from "../utilities/Token";
 
-function getUserController():ICandidateAuthControllerProtocol{ // retirar isso daqui imediatamente
+function getUserController():IUserAuthControllerProtocol{ // retirar isso daqui imediatamente
     const userService = new UserService()
     const userVerificator = new CreateUserVerificator(userService)
     const tokenManipulator = new TokenManipulator()

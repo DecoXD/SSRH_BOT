@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { IUserServiceProtocol } from "../../../services/auth/IUserService";
 import { HttpException } from "../../../exceptions/HttpException";
-import { ICandidateAuthControllerProtocol } from "./ICandidateController";
+import { IUserAuthControllerProtocol } from "./IUserController";
 import { ICreateUserVerificator } from "../../../utilities/verificators/auth/ICreateUserVerificator";
 import { ITokenManipulator } from "../../../utilities/interfaces";
 
 
-export class UserController implements ICandidateAuthControllerProtocol{
+export class UserController implements IUserAuthControllerProtocol{
   
   constructor( private service:IUserServiceProtocol, private verificator:ICreateUserVerificator,private tokenManipulator:ITokenManipulator){
     
@@ -14,13 +14,13 @@ export class UserController implements ICandidateAuthControllerProtocol{
 
   async createUser(req: Request, res: Response): Promise<Response> {
     //implements zod verification 
-    const {name,email,password} = req.body
+    const {name,email,password,admin_key} = req.body
+
     const data = {
-      name,email,password
+      name,email,password,admin_key
     }
     try {
       //initialize register verification
-      
       await this.verificator.startRegisterVerification(data)
       const newUser = await this.service.registerUser(data) // talvez deixar o hash para outra classe possa ser uma boa ideia
       //create a token
@@ -44,9 +44,13 @@ export class UserController implements ICandidateAuthControllerProtocol{
       password
     }
     try {
+
       // the responsability to verify if email exists and password and if others business rules matches is directed to verificator      
+
       await this.verificator.startLoginVerification(data)     
-       const user = await this.service.getUserByEmail(email)
+
+      const user = await this.service.getUserByEmail(email)
+
       //send token to registred    
       const token = await this.tokenManipulator.createToken(user.id)
       return res.status(200).json({message:'ok',token})

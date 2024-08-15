@@ -1,6 +1,9 @@
 -- CreateTable
 CREATE TABLE `Candidate` (
     `candidate_id` VARCHAR(191) NOT NULL,
+    `first_name` VARCHAR(191) NOT NULL,
+    `last_name` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(191) NOT NULL,
     `position` VARCHAR(255) NOT NULL,
     `educational_institution` VARCHAR(255) NOT NULL,
     `gender` VARCHAR(45) NOT NULL,
@@ -85,6 +88,7 @@ CREATE TABLE `Opportunities` (
     `description` VARCHAR(255) NOT NULL,
     `salary` INTEGER NOT NULL,
     `requirements` VARCHAR(255) NOT NULL,
+    `status` VARCHAR(191) NOT NULL DEFAULT 'aberta',
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `expires` DATETIME(3) NOT NULL,
     `enterprise_id` VARCHAR(191) NOT NULL,
@@ -102,7 +106,7 @@ CREATE TABLE `Selection_process` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    PRIMARY KEY (`id_selection_process`)
+    PRIMARY KEY (`candidate_id`, `enterprise_id`, `opportunitie_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey

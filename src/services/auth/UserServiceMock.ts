@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { ICandidateAttributes } from "../../interfaces/auth";
+import { IUserAttributes } from "../../interfaces/auth";
 import { IUserServiceProtocol } from "./IUserService";
 import { readFile} from "node:fs/promises";
 import { fileURLToPath } from "node:url";
@@ -10,7 +10,7 @@ export class UserServiceMock implements IUserServiceProtocol{
     const path =join(__dirname,'..','..','mock','db','Users.json')
     return path
   }
-  async getAllUsers(): Promise<ICandidateAttributes[]|null> {
+  async getAllUsers(): Promise<IUserAttributes[]|null> {
     const path =this.getPath()
     const items = (await readFile(path)).toString()
     const resolve = await JSON.parse(items)
@@ -18,7 +18,7 @@ export class UserServiceMock implements IUserServiceProtocol{
    
   }
 
-  async getUserById(id: string): Promise< ICandidateAttributes> {
+  async getUserById(id: string): Promise< IUserAttributes> {
     const users = await this.getAllUsers()
 
     for(let i = 0; i < users.length;i++){
@@ -29,7 +29,7 @@ export class UserServiceMock implements IUserServiceProtocol{
 
   }
 
-  async getUserByEmail(email: string): Promise<null | ICandidateAttributes> {
+  async getUserByEmail(email: string): Promise<null | IUserAttributes> {
     const userList = await this.getAllUsers()
     
     for (let i = 0 ; i <userList.length;i++){
@@ -41,7 +41,7 @@ export class UserServiceMock implements IUserServiceProtocol{
     return null
   }
 
-  async registerUser(userData: ICandidateAttributes): Promise<ICandidateAttributes> {
+  async registerUser(userData: IUserAttributes): Promise<IUserAttributes> {
     return userData
   }
 
@@ -49,7 +49,7 @@ export class UserServiceMock implements IUserServiceProtocol{
     
   }
 
-  async updateUser(id: string, data: ICandidateAttributes): Promise<void> {
+  async updateUser(id: string, data: IUserAttributes): Promise<void> {
     
   }
 }

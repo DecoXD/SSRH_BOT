@@ -3,7 +3,7 @@
 /*eslint disable */
 import { prismaClient } from "../../config/dbConfig";
 import { HttpException } from "../../exceptions/HttpException";
-import { ICandidateAttributes } from "../../interfaces/auth";
+import { IUserAttributes } from "../../interfaces/auth";
 
 import { IUserServiceProtocol } from "./IUserService";
 import bcrypt from 'bcrypt';
@@ -15,22 +15,24 @@ export class UserService implements IUserServiceProtocol {
 
   constructor(){}
 
-  async registerUser(userData: ICandidateAttributes) {
+  async registerUser(userData: IUserAttributes) {
     try {
-      const {name,email,password} = userData
+      const {name,email,password,admin_key} = userData
      
       const salt = bcrypt.genSaltSync(12)
       const hashPassword = bcrypt.hashSync(password,salt)// refatorar 
+      const hashAdmin_key = bcrypt.hashSync(admin_key,salt)// refatorar 
      
 
       
       const newUser = {
         name,
         email,
-        password:hashPassword
+        password:hashPassword,
+        admin_key
       }
-
-      const user = await prismaClient.user.create({
+      
+      const user = await prismaClient.admin.create({
         data:newUser
       })
       if(!user){
@@ -44,9 +46,9 @@ export class UserService implements IUserServiceProtocol {
   
   }
 
-  async getUserById(id:string):Promise<ICandidateAttributes >{
+  async getUserById(id:string):Promise<IUserAttributes >{
    
-    const user = await  prismaClient.user.findUnique({ where:{
+    const user = await  prismaClient.admin.findUnique({ where:{
       id:id
     }})
     if(!user) throw new HttpException('user not found',401)
@@ -57,7 +59,7 @@ export class UserService implements IUserServiceProtocol {
   async getUserByEmail(email:string){
    
     try {
-      const user = await  prismaClient.user.findUnique({ where:{
+      const user = await  prismaClient.admin.findUnique({ where:{
         email:email
         }})
         return user
@@ -67,13 +69,13 @@ export class UserService implements IUserServiceProtocol {
 
   }
 
-  async getAllUsers(): Promise<ICandidateAttributes[]> {
-    const user = await prismaClient.user.findMany()
+  async getAllUsers(): Promise<IUserAttributes[]> {
+    const user = await prismaClient.admin.findMany()
     return user
   }
 
-  async updateUser(id:string,data:ICandidateAttributes){
-    await prismaClient.user.update({
+  async updateUser(id:string,data:IUserAttributes){
+    await prismaClient.admin.update({
       where:{
         id:id
       },

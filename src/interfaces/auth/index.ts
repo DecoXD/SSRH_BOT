@@ -1,15 +1,15 @@
 /* eslint-disable */
 import { Request, Response } from "express";
 
-export type ICandidateAttributes = {
+export type IUserAttributes = {
     name:string,
     email:string,
     password:string,
+    admin_key:string
     id?:string
-    role?:string
-}
 
-export type ICandidateLoginAttributes = {
+}
+export type IUserLoginAttributes = {
     email:string,
     password:string,
 }
