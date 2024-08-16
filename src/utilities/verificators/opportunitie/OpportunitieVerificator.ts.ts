@@ -1,17 +1,17 @@
 import { Request } from "express";
 import { HttpException } from "../../../exceptions/HttpException";
-import { ProductAttributes } from "../../../interfaces/product";
+import { OpportunitieAttributes } from "../../../interfaces/opportunitie";
 import { IUserServiceProtocol } from "../../../services/auth/IUserService";
-import { IProductServiceProtocol } from "../../../services/product/IProductService";
+import { IOpportunitieServiceProtocol } from "../../../services/opportunitie/IOpportunitieService";
 import { TokenManipulator } from "../../Token";
 import { ITokenManipulator } from "../../interfaces";
-import { IProductVerificatorProtocol } from "./IProductVerificatorProtocolt";
+import { IOpportunitieVerificatorProtocol } from "./IOpportunitieVerificatorProtocolt";
 import { allFieldsAreFilled } from "../../checkFields";
 
-export class ProductVerificator implements IProductVerificatorProtocol{
+export class OpportunitieVerificator implements IOpportunitieVerificatorProtocol{
 
   constructor(
-    private productService:IProductServiceProtocol,
+    private opportunitieService:IOpportunitieServiceProtocol,
     private userService:IUserServiceProtocol,
     private tokenManipulator:ITokenManipulator){
 
@@ -22,11 +22,11 @@ export class ProductVerificator implements IProductVerificatorProtocol{
   async verifyUserPermissions(userId:string){
     try {
       const user = await this.userService.getUserById(userId)
-      const adminCode = process.env.APP_ADMIN_CODE
+      // const adminCode = process.env.APP_ADMIN_CODE
       
-      if(user.role != adminCode){
-        throw new HttpException('você não tem permissão para realizar essa operação',403)
-      }
+      // if(user.role != adminCode){
+      //   throw new HttpException('você não tem permissão para realizar essa operação',403)
+      // }
       return true
     } catch (error) {
       if(error instanceof HttpException){
@@ -36,11 +36,11 @@ export class ProductVerificator implements IProductVerificatorProtocol{
     }
   }
 
-  async addProductVerificator(req:Request,product: ProductAttributes): Promise<string> {
+  async addOpportunitieVerificator(req:Request,opportunitie: OpportunitieAttributes): Promise<string> {
     try {
       //verificar se todos os campos estão preenchidos 
     
-      const fieldsAreFilled = allFieldsAreFilled(product)
+      const fieldsAreFilled = allFieldsAreFilled(opportunitie)
       
       if(!fieldsAreFilled) throw new HttpException('Por favor Preencha todos os campos',404)
       //pegar o id do usuário pelo token e verificar se ele tem permissão de ADMIN
@@ -58,11 +58,11 @@ export class ProductVerificator implements IProductVerificatorProtocol{
 
   }
 
-  async deleteProductVerificator(product: ProductAttributes): Promise<void> {
+  async deleteOpportunitieVerificator(opportunitie: OpportunitieAttributes): Promise<void> {
     //verificar permissão do usuário 
   }
 
-  async updateProductVerificator(product: ProductAttributes): Promise<void> {
+  async updateOpportunitieVerificator(opportunitie: OpportunitieAttributes): Promise<void> {
     //verificar se todos os campos estão preenchidos 
     //verificar permissão do usuário
   }
