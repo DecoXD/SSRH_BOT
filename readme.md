@@ -28,15 +28,6 @@
 
 
 
-### step by step
-
-  - create user routes 
-  - create product routes
-  - create cart routes
-  - create payment routes
-
-
-
 
 # Current step
 
