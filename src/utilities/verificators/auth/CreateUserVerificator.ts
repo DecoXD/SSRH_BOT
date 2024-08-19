@@ -2,7 +2,8 @@ import { HttpException } from "../../../exceptions/HttpException";
 import { IUserAttributes, IUserLoginAttributes } from "../../../interfaces/auth";
 import { ICreateUserVerificator } from "./ICreateUserVerificator";
 import { IUserServiceProtocol } from "../../../services/auth/IUserService";
-import bcrypt from 'bcrypt';
+
+import { passwordMatch as passwordIsMatch } from "../../passwordMatch";
 import { allFieldsAreFilled } from "../../checkFields";
 
 
@@ -20,16 +21,7 @@ export class CreateUserVerificator implements ICreateUserVerificator{
    
   }
 
-  async passwordMatch(userPassword:string,password:string):Promise<boolean> {
-
-    
-      const passwordMatch = await bcrypt.compare(password,userPassword)
-      
-      if(!passwordMatch) throw new HttpException('email or password are incorrect2',401)
-      return true
-    
-   
-  }
+  
 
   async startLoginVerification(user:IUserLoginAttributes): Promise<void> {
     try {
@@ -43,7 +35,7 @@ export class CreateUserVerificator implements ICreateUserVerificator{
       if(!userData) throw new HttpException('email or password are incorrect2',401)
       //check if password match
       
-      const passwordMatch = await this.passwordMatch(userData.password,user.password)
+      const passwordMatch = await passwordIsMatch(userData.password,user.password)
       if(!passwordMatch) throw new HttpException('email or password are incorrect2',401)
       
     } catch (error) {
