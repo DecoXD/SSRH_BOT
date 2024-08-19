@@ -1,4 +1,5 @@
 node_modules
+notations
 .env
 ./src/mock
 *.spec.ts

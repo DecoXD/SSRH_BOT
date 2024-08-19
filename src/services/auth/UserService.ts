@@ -22,14 +22,12 @@ export class UserService implements IUserServiceProtocol {
       const salt = bcrypt.genSaltSync(12)
       const hashPassword = bcrypt.hashSync(password,salt)// refatorar 
       const hashAdmin_key = bcrypt.hashSync(admin_key,salt)// refatorar 
-     
-
       
-      const newUser = {
+      const newUser = { 
         name,
         email,
         password:hashPassword,
-        admin_key
+        admin_key:hashAdmin_key
       }
       
       const user = await prismaClient.admin.create({
@@ -47,17 +45,14 @@ export class UserService implements IUserServiceProtocol {
   }
 
   async getUserById(id:string):Promise<IUserAttributes >{
-   
     const user = await  prismaClient.admin.findUnique({ where:{
       id:id
     }})
     if(!user) throw new HttpException('user not found',401)
     return user
-
   }
 
   async getUserByEmail(email:string){
-   
     try {
       const user = await  prismaClient.admin.findUnique({ where:{
         email:email

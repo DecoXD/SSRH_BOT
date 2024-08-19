@@ -10,7 +10,7 @@ export class CreateUserVerificator implements ICreateUserVerificator{
 
   constructor(private service:IUserServiceProtocol){}
 
-  async emailAlreadyExists(email:string): Promise<IUserAttributes | undefined> {
+  async getUserIfEmailAlreadyExists(email:string): Promise<IUserAttributes | undefined> {
 
       const user = await this.service.getUserByEmail(email)
 
@@ -38,7 +38,7 @@ export class CreateUserVerificator implements ICreateUserVerificator{
       
       //check if user exists
       
-      const userData = await this.emailAlreadyExists(user.email)
+      const userData = await this.getUserIfEmailAlreadyExists(user.email)
       
       if(!userData) throw new HttpException('email or password are incorrect2',401)
       //check if password match
@@ -63,7 +63,7 @@ export class CreateUserVerificator implements ICreateUserVerificator{
       //check if all fields are filled
       allFieldsAreFilled(user)
       //check if email exists
-      const userExists = await this.emailAlreadyExists(user.email)
+      const userExists = await this.getUserIfEmailAlreadyExists(user.email)
       
       if(userExists){
         throw new HttpException('usuário ou senha incorretos register',409)

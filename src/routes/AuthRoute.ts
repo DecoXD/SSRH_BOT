@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { UserService } from "../services/auth/UserService";
 import { CreateUserVerificator } from "../utilities/verificators/auth/CreateUserVerificator";
-import { IUserAuthControllerProtocol } from "../controllers/Auth/User/IUserController";
-import { UserController } from "../controllers/Auth/User/UserController";
+import { IUserAuthControllerProtocol } from "../controllers/Admin/Auth/IUserController";
+import { UserController } from "../controllers/Admin/Auth/UserController";
 import { TokenManipulator } from "../utilities/Token";
 
 function getUserController():IUserAuthControllerProtocol{ // retirar isso daqui imediatamente

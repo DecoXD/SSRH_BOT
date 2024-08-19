@@ -53,42 +53,43 @@ model Candidate_address {
 }
 
 model Enterprise_accounts {
-  enterprise_id     String              @id @default(uuid())
-  name              String              @db.VarChar(255)
-  email             String              @db.VarChar(255)
-  password          String              @db.VarChar(45)
-  cnpj              String              @db.VarChar(45)
-  owner             String              @db.VarChar(45)
-  corporate_name    String              @db.VarChar(255)
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  contact           Enterprise_contact  @relation(fields: [contact_id], references: [enterprise_contact_id])
-  contact_id        Int
-  address           Enterprise_address  @relation(fields: [address_id], references: [enterprise_address_id])
-  address_id        Int
-  Opportunities     Opportunities[]
-  Selection_process Selection_process[]
+  enterprise_id  String   @id @default(uuid())
+  name           String   @db.VarChar(255)
+  email          String   @db.VarChar(255)
+  password       String   @db.VarChar(45)
+  cnpj           String   @db.VarChar(45)
+  owner          String   @db.VarChar(45)
+  corporate_name String   @db.VarChar(255)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  Opportunities      Opportunities[]
+  Selection_process  Selection_process[]
+  Enterprise_address Enterprise_address[]
+  Enterprise_contact Enterprise_contact[]
 }
 
 model Enterprise_address {
-  enterprise_address_id Int                   @id @default(autoincrement())
+  enterprise_address_id Int                 @id @default(autoincrement())
   cep                   String
-  city                  String                @db.VarChar(45)
-  street                String                @db.VarChar(45)
-  state                 String                @db.VarChar(45)
-  country               String                @db.VarChar(45)
+  city                  String              @db.VarChar(45)
+  street                String              @db.VarChar(45)
+  state                 String              @db.VarChar(45)
+  country               String              @db.VarChar(45)
   number                Int?
-  complement            String                @db.VarChar(45)
-  neighborhood          String                @db.VarChar(45)
-  Enterprise_accounts   Enterprise_accounts[]
+  complement            String              @db.VarChar(45)
+  neighborhood          String              @db.VarChar(45)
+  enterprise            Enterprise_accounts @relation(fields: [enterprise_id], references: [enterprise_id])
+  enterprise_id         String
 }
 
 model Enterprise_contact {
-  enterprise_contact_id Int                   @id @default(autoincrement())
-  phone_1               String                @db.VarChar(45)
-  phone_2               String                @db.VarChar(45)
-  phone_3               String                @db.VarChar(45)
-  Enterprise_accounts   Enterprise_accounts[]
+  enterprise_contact_id Int                 @id @default(autoincrement())
+  phone_1               String              @db.VarChar(45)
+  phone_2               String              @db.VarChar(45)
+  phone_3               String              @db.VarChar(45)
+  enterprise            Enterprise_accounts @relation(fields: [enterprise_id], references: [enterprise_id])
+  enterprise_id         String
 }
 
 model Opportunities {
