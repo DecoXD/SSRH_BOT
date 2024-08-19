@@ -6,3 +6,8 @@ export type ITokenManipulator = {
   getToken(req:Request):Promise<string>
   getUserByToken(token:string)
 }
+
+export type ICredentialVerifier = {
+  passwordMatch(userPassword:string,password:string):Promise<boolean>
+  validAdminKey(data:string,admin_key:string):Promise<boolean>
+}

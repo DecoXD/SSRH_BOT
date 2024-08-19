@@ -1,15 +1,6 @@
 import bcrypt from 'bcrypt';
 import { HttpException } from '../exceptions/HttpException';
 
-export async function passwordMatch(userPassword:string,password:string):Promise<boolean> {
-  
-  const passwordMatch = await bcrypt.compare(password,userPassword)
-  
-  if(!passwordMatch) throw new HttpException('email or password are incorrect2',401)
-  return true
-
-
-}
 
 export class CredentialVerifier {
 
@@ -21,6 +12,7 @@ export class CredentialVerifier {
     return true
   
   }
+
 
   async validAdminKey(data:string,admin_key:string):Promise<boolean> {
 

@@ -4,10 +4,12 @@ import { CreateUserVerificator } from "../utilities/verificators/auth/CreateUser
 import { IUserAuthControllerProtocol } from "../controllers/Admin/Auth/IUserController";
 import { UserController } from "../controllers/Admin/Auth/UserController";
 import { TokenManipulator } from "../utilities/Token";
+import { CredentialVerifier } from "../utilities/passwordMatch";
 
 function getUserController():IUserAuthControllerProtocol{ // retirar isso daqui imediatamente
     const userService = new UserService()
-    const userVerificator = new CreateUserVerificator(userService)
+    const credentialVerifier = new CredentialVerifier()
+    const userVerificator = new CreateUserVerificator(userService,credentialVerifier)
     const tokenManipulator = new TokenManipulator()
     const userController = new UserController(userService,userVerificator,tokenManipulator)
     return userController
