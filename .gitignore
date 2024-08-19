@@ -1,6 +1,7 @@
 node_modules
 notations
 .env
+steps.txt
 ./src/mock
 *.spec.ts
 *.mock.ts

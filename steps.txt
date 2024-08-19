@@ -1,7 +1,0 @@
-# testar objetos do login e register - ok
-
-
-# CRUD de vagas
-
- -adcionar vagas
- -

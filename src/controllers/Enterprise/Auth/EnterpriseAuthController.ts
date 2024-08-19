@@ -1,22 +1,29 @@
 import { Request, Response } from "express";
 import { IEnterpriseAuthAttributes } from "../../../interfaces/Enterprise";
 import { IEnterpriseAuthControllerProtocol } from "./IEnterpriseAuthController";
+import { IEnterpriseManagementService } from "../../../services/enterprise/IEnterpriseManagementService";
+import { IManageEnterpriseAccountVerificator } from "../../../utilities/verificators/enterprise/auth/IManageEnterpriceAccountVerificator";
 
 
 
 export class EnterpriseAuthController implements IEnterpriseAuthControllerProtocol {
+
+  constructor(
+    enterpriseService:IEnterpriseManagementService,
+    verificator:IManageEnterpriseAccountVerificator,
+    private addressService,
+    private contaceService
+  ){
+
+  }
+
   async createEnterpriseAccount(req:Request,res:Response): Promise<Response> {
-    const {
-      name,              
-      email,              
-      password,              
-      cnpj,              
-      owner,              
-      corporate_name,          
-    } = req.body
+
+    const {enterpriseData,contact,address} = req.body
     
     try {
       
+      res.status(200).json({message:'empresa cadastrada com sucesso'})
     } catch (error) {
       
     }
