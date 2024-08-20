@@ -8,12 +8,12 @@ import { AddressEnterpriseService } from '../services/address/Enterprise/Address
 const router = Router()
 
 function createEnterpriseController(){
-  const service = new EnterpriseManagementService()
-  const credentialVerifier = new CredentialVerifier()
-  const verificator = new ManageEnterpriseAccountVerificator(service,credentialVerifier)
   const contactService = new ContactService()
   const addressService = new AddressEnterpriseService()
-  const controller = new EnterpriseAuthController(service,verificator,contactService,addressService)
+  const service = new EnterpriseManagementService(contactService,addressService)
+  const credentialVerifier = new CredentialVerifier()
+  const verificator = new ManageEnterpriseAccountVerificator(service,credentialVerifier)
+  const controller = new EnterpriseAuthController(service,verificator)
   //i'm here
   return controller
 }

@@ -1,5 +1,7 @@
+import { IAddressAttributes, IContactAttributes, IEnterpriseAuthAttributes } from "../../interfaces/Enterprise"
+
 export type IEnterpriseManagementService = {
-  registerWithContactAndAddress():void
+  registerWithContactAndAddress(enterprise:IEnterpriseAuthAttributes,address:IAddressAttributes,contact:IContactAttributes):Promise<void>
   getById():void
   
 }

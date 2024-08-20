@@ -5,15 +5,14 @@ export type IEnterpriseAuthAttributes = {
   cnpj: string              
   owner: string              
   corporate_name: string 
-  address_id?: number             
-  contact_id?: number             
+              
 }
 
 
 export type IContactAttributes = {
-  phone1:string
-  phone2:string
-  phone3:string
+  phone_1:string
+  phone_2:string
+  phone_3:string
 }
 export type IAddressAttributes = {
   street:string
@@ -24,4 +23,5 @@ export type IAddressAttributes = {
   country:string
   complement:string,
   cep:string
+  
 }

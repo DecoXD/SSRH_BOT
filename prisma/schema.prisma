@@ -55,11 +55,11 @@ model Candidate_address {
 model Enterprise_accounts {
   enterprise_id  String   @id @default(uuid())
   name           String   @db.VarChar(255)
-  email          String   @db.VarChar(255)
+  email          String   @unique @db.VarChar(255)
   password       String   @db.VarChar(45)
-  cnpj           String   @db.VarChar(45)
+  cnpj           String   @unique @db.VarChar(45)
   owner          String   @db.VarChar(45)
-  corporate_name String   @db.VarChar(255)
+  corporate_name String   @unique @db.VarChar(255)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
